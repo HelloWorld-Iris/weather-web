@@ -33,13 +33,14 @@ class Register extends Controller
       {
         $data = ['user_name'=>$param['user_name'],'user_pwd'=>md5($param['user_pwd'])];
             $ok = db('users')->insert($data);
+        $this->redirect(url('login/index'));
       }
       
     }
     
   
 
-    $this->redirect(url('login/index'));
+    
 }
   
 

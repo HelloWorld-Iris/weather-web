@@ -89,6 +89,35 @@ class wechatCallbackapiTest
             echo "Input something...";
         }
     }
+  
+  public function read($cityname)
+    {
+        
+        
+        $model = model('News');
+        $data = $model->getCityCode($cityname);
+        if ($data) {
+            $code = 200;
+        } else {
+            $code = 404;
+        }
+        $data = [
+            'code' => $code,
+            'data' => $data
+        ];
+        return json($data);
+    }
+  public function getCityCode($id = 1)
+    {
+        $res = Db::name('ins_county')->where('county_name', $id)->select();
+        return $res;
+    }
+
+    public function getNewsList()
+    {
+        $res = Db::name('news')->select();
+        return $res;
+    }
 
     public function handleEvent($object)
     {
@@ -124,7 +153,7 @@ class wechatCallbackapiTest
         include("weather_cityId.php");
         $c_name=$weather_cityId[$n];
         if(!empty($c_name)){
-            $json=file_get_contents("http://wthrcdn.etouch.cn/WeatherApi?citykey="."101010100".".html");
+            $json=file_get_contents("http://IP/weather/"."101010100");
             return json_decode($json);
         } else {
             return null;
